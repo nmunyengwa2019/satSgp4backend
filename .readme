@@ -1,0 +1,5 @@
+How to run the code
+
+.venv\Scripts\activate
+ipconfig //get the ethernet ip address 192.*.*.*
+flask --app flask_sgp4.py run --host=192.*.*.*

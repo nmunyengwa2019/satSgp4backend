@@ -5,6 +5,10 @@ from astropy.coordinates import TEME, CartesianDifferential, CartesianRepresenta
 from astropy import coordinates as coord, units as u
 from astropy.time import Time
 import pandas as pd
+from sgp4.propagation import sgp4
+from sgp4.earth_gravity import wgs72
+
+
 
 
 app = Flask(__name__)
@@ -17,6 +21,9 @@ def index():
 
 @app.route('/sgp4/<satelieName>/<fistline>/<secondline>', methods=['POST'])
 def sgp4(satelieName, fistline, secondline):
+    #.........................
+    print(satelieName+" \n"+fistline+" \n"+secondline)
+    #.........................
     L_Name = []
     L_1 = []
     L_2 = []
@@ -53,8 +60,10 @@ def sgp4(satelieName, fistline, secondline):
         print(dataframe.Satellite_name[i])
         s = dataframe.Line_1[i]
         t = dataframe.Line_2[i]
-        satellite = Satrec.twoline2rv(s,t)
+        
+        satellite = Satrec.twoline2rv(s,t )
         year = satellite.epochyr
+        print("YEAR>>> "+str(year))
         
         if (year<57):
             year = year+2000
@@ -66,7 +75,9 @@ def sgp4(satelieName, fistline, secondline):
         for j in range(0, 1440, 10):
             jd, fr = jday(year, month, day, hour, minute+j, second)
             e, r, v = satellite.sgp4(jd, fr)
+            
             position.append(r)
+            
             print(r)
         return jsonify(position)
             
