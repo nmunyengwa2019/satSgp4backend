@@ -82,5 +82,3 @@ def sgp4(satelieName, fistline, secondline):
         return jsonify(position)
             
 
-    if __name__ == '__main__':
-        app.run(debug=True)
