@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify, render_template
 
 from sgp4.api import Satrec, jday, days2mdhms
@@ -84,4 +85,4 @@ def sgp4(satelieName, fistline, secondline):
 
 # python web server
 if __name__ == '__main__':
-    app.run(debug=True, port=os.getenv("PORT", default=5000))
+    app.run(host='0.0.0.0', port=8000)
